@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="x_pos" default="0.0"/>
+  <arg name="y_pos" default="0.0"/>
+  <arg name="z_pos" default="0.0"/>
+  <arg name="r_ori" default="0.0"/>
+  <arg name="p_ori" default="0.0"/>
+  <arg name="y_ori" default="0.0"/>
+  <arg name="model" default="$(find intelligent_shelf_world)/urdf/intelligent_shelf.urdf.xacro"/>
+  <arg name="rvizconfig" default="$(find intelligent_shelf_world)/rviz/intelligent_shelf.rviz" />
+
+  <!-- gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+  <!-- rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
+
+  <!-- urdf spawn -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find intelligent_shelf_world)/urdf/intelligent_shelf.urdf.xacro" />
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf"  args="-urdf -model $(arg model) -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -R $(arg r_ori) -P $(arg p_ori) -Y $(arg y_ori) -param robot_description" />
+
+  <!-- robot_state_publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+
+  <!-- rosparam -->
+  <rosparam command="load" file="$(find intelligent_shelf_world)/config/joints.yaml" />
+  <rosparam command="load" file="$(find intelligent_shelf_world)/config/position.yaml"/>
+
+  <!-- controller -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" args="joint_state_controller shelf_top_position_controller shelf_middle_position_controller shelf_bottom_position_controller"/>
+
+</launch>
