@@ -1,0 +1,2 @@
+# Intelligent_shelf
+大原研究室にある電動陳列棚(Intelligent_shelf)をGazebo上で動作させるためのリポジトリ
