@@ -1,0 +1,26 @@
+# shelf_top_position_controller:
+#   type: "effort_controllers/JointPositionController"
+#   joint: shelf_top_joint
+#   pid: {p: 5000, i: 100.0, d: 100, i_clamp: 10.0}
+
+# shelf_middle_position_controller:
+#   type: "effort_controllers/JointPositionController"
+#   joint: shelf_middle_joint
+#   pid: {p: 5000, i: 100.0, d: 100, i_clamp: 10.0}
+
+# shelf_bottom_position_controller:
+#   type: "effort_controllers/JointPositionController"
+#   joint: shelf_bottom_joint
+#   pid: {p: 5000, i: 100.0, d: 100, i_clamp: 10.0}
+
+ shelf_top_position_controller:
+   type: "position_controllers/JointPositionController"
+   joint: shelf_top_joint
+
+ shelf_middle_position_controller:
+   type: "position_controllers/JointPositionController"
+   joint: shelf_middle_joint
+
+ shelf_bottom_position_controller:
+   type: "position_controllers/JointPositionController"
+   joint: shelf_bottom_joint

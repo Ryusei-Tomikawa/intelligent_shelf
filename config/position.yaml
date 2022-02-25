@@ -1,0 +1,11 @@
+ shelf_top_position_controller:
+   type: "position_controllers/JointPositionController"
+   joint: shelf_top_joint
+
+ shelf_middle_position_controller:
+   type: "position_controllers/JointPositionController"
+   joint: shelf_middle_joint
+
+ shelf_bottom_position_controller:
+   type: "position_controllers/JointPositionController"
+   joint: shelf_bottom_joint
